@@ -49,7 +49,15 @@ header{position:sticky;top:0;z-index:9;background:#081321eF;border-bottom:1px so
 <script>
 document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;document.querySelectorAll('.match').forEach(card=>card.style.display=(f==='all'||card.dataset.league===f)?'block':'none')}));
 </script>
-  
+  <section class="section" id="teams">
+  <div class="head">
+    <h2>🌍 تیم‌های فوتبال</h2>
+    <span class="hint">اطلاعات از پایگاه داده</span>
+  </div>
+  <div id="teams-list" class="matches">
+    <p>در حال دریافت تیم‌ها...</p>
+  </div>
+  </section>
 <!-- Supabase Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
