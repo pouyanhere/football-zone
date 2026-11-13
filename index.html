@@ -100,6 +100,42 @@ async function testDatabase() {
 }
 
 testDatabase();
+  async function loadTeams() {
+  const list = document.getElementById('teams-list');
+
+  list.innerHTML = '<p>در حال دریافت اطلاعات...</p>';
+
+  const { data, error } = await supabaseClient
+    .from('teams')
+    .select('id, name, country, logo_url')
+    .order('name');
+
+  if (error) {
+    list.innerHTML = '<p>خطا در دریافت تیم‌ها: ' + error.message + '</p>';
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    list.innerHTML = '<p>هنوز تیمی ثبت نشده است.</p>';
+    return;
+  }
+
+  list.innerHTML = data.map(team => `
+    <div class="match">
+      <div class="pair">
+        <div class="club">
+          ${team.logo_url
+            ? `<img src="${team.logo_url}" alt="" style="width:55px;height:55px;object-fit:contain;display:block;margin:0 auto 10px">`
+            : '<span class="crest">⚽</span>'}
+          ${team.name}
+          <div style="color:#9badc4;font-size:11px;margin-top:5px">${team.country || ''}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+loadTeams();
 </script>
   
 </body></html>
