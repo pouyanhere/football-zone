@@ -49,4 +49,49 @@ header{position:sticky;top:0;z-index:9;background:#081321eF;border-bottom:1px so
 <script>
 document.querySelectorAll('.filter').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const f=btn.dataset.filter;document.querySelectorAll('.match').forEach(card=>card.style.display=(f==='all'||card.dataset.league===f)?'block':'none')}));
 </script>
+  
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = 'https://vqimekzxnyrhxcdmwnzh.supabase.co';
+
+const SUPABASE_KEY = 'sb_publishable_v4H3h-TuSmLWZAnK2YtXpQ_0DPHHbMc';
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+// Test database connection
+async function testDatabase() {
+  const status = document.createElement('div');
+
+  status.style.cssText =
+    'position:fixed;bottom:15px;right:15px;z-index:9999;' +
+    'padding:12px 18px;border-radius:10px;' +
+    'background:#101e30;color:white;font-size:13px;';
+
+  status.textContent = 'Connecting to database...';
+  document.body.appendChild(status);
+
+  const { data, error } = await supabaseClient
+    .from('teams')
+    .select('id')
+    .limit(1);
+
+  if (error) {
+    status.textContent = 'Database Error: ' + error.message;
+    status.style.background = '#991b1b';
+    console.error(error);
+  } else {
+    status.textContent = 'FootballZone Database Connected!';
+    status.style.background = '#166534';
+    console.log('Supabase connected:', data);
+  }
+}
+
+testDatabase();
+</script>
+  
 </body></html>
